@@ -1,0 +1,65 @@
+CODIGO DE HTML <ion-content fullscreen>
+  <div class="background">
+    <div class="logo-container">
+      <img src="assets/img/logo.png" alt="Logo" class="logo">
+    </div>
+
+    <div class="button-container">
+      <ion-button expand="block" class="custom-button" (click)="ingresar()">
+        Ingresar
+      </ion-button>
+      <ion-button expand="block" class="custom-button" (click)="registrar()">
+        Registrar
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+
+
+
+CODIGO DE HOME.PAGE.TS para la ruta  de los botones 
+
+
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss'],
+})
+export class HomePage {
+  constructor(private router: Router) {}
+
+  ingresar() {
+    // Navegar a la página de ingreso
+    this.router.navigate(['/ingreso']);
+  }
+
+  registrar() {
+    // Navegar a la página de registro
+    this.router.navigate(['/registrar']);
+  }
+}
+
+
+
+y el app-routing.module.ts
+
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomePageModule) },
+  { path: 'ingreso', loadChildren: () => import('./ingreso/ingreso.module').then(m => m.IngresoPageModule) },
+  { path: 'registrar', loadChildren: () => import('./registrar/registrar.module').then(m => m.RegistrarPageModule) },
+  // Otras rutas
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}
+
